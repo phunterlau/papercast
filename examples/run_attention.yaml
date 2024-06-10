@@ -1,0 +1,7 @@
+url: "https://arxiv.org/abs/1706.03762"
+use_cache: true
+episode: 3
+prompt: "dialogue_prompt"
+background_knowledge: |
+  Current year is 2024. Attention is all you need is known as the transformer paper published in 2017 by Google.
+  It is the foundation paper of the current large language model research.
