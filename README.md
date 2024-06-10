@@ -2,7 +2,7 @@
 
 PaperCast is a project that turns any research articles into podcasts using AI generated audio. It is inspired by Illuminate <https://illuminate.withgoogle.com/>.
 
-> The author doesn't know any people working on Illuminate project nor their methods.
+> The author doesn't know any people working on Illuminate project nor their methods. The author is still in the waiting list for its beta release.
 
 ![image](papercast.png)
 
@@ -14,7 +14,7 @@ To generate a podcast for "Attention is all you need", you can simply run the fo
 python run.py examples/run_attention.yaml
 ```
 
-It should produce `1706.03762.json` for all records in the `transcript` directory and `1706.03762.wav` in the `audio` directory. The example is included for example.
+It should produce `1706.03762.json` in the `transcript` directory and `1706.03762.wav` in the `audio` directory. 
 
 Please also try a few example videos on Youtube. The play list link is at [here](https://www.youtube.com/watch?v=IpuUIDOfArY&list=PLdZH-mptYlBHSHV5Ij6AgRt577UlGKaGR)
 
@@ -72,7 +72,7 @@ I prefer the podcast in the question answering style, so the transcript must inc
 ## Limitations
 
 * The question generation is limited to the article's title and abstract only. A better tree-level question generation using the full text might bring deeper and better questions.
-* It depends on ChatTTS <https://github.com/2noise/ChatTTS> for audio generation. The features are still very experimental.
+* It depends on ChatTTS <https://github.com/2noise/ChatTTS> for audio generation. The features are still very experimental and the speaker voice lottery is very tricky.
 
 ## Future ideas
 
