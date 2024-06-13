@@ -1,6 +1,6 @@
 # PaperCast: AI generated podcast for each scientific research article
 
-PaperCast is a project that turns any research articles into podcasts using AI generated audio. It is inspired by Illuminate <https://illuminate.withgoogle.com/>.
+PaperCast is a project that turns any research articles into podcasts using AI generated audio. It is inspired by Illuminate <https://illuminate.withgoogle.com/> and ScienceCast <https://sciencecast.org/>.
 
 > The author doesn't know any people working on Illuminate project nor their methods. The author is still in the waiting list for its beta release.
 
