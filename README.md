@@ -8,7 +8,7 @@ PaperCast is a project that turns any research articles into podcasts using AI g
 
 ## Changelogs
 
-Jun 15th, 2024: add subtitle `srt` file generation.
+Jun 15th, 2024: add subtitle `srt` file generation. See `examples/run_gorilla.yaml` to set `offset` if any intro audio, and example video at [PaperCast EP5: "Gorilla: Large Language Model Connected with Massive APIs"](https://www.youtube.com/watch?v=KH3SAbm14cI)
 
 ## Example
 

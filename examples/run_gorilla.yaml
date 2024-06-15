@@ -1,0 +1,6 @@
+url: "https://arxiv.org/abs/2305.15334"
+use_cache: true
+episode: 5
+background_knowledge: |
+  Gorilla can choose from a large number of up to 1500 APIs.
+audio_offset: 15

@@ -81,10 +81,11 @@ if __name__ == '__main__':
     episode = str(config['episode'])
     use_cache = config['use_cache']
     background_knowledge = config['background_knowledge']
+    audio_offset = config.get('audio_offset',0)
 
     arxiv_id = get_arxiv_id(url)
     transcript = generate_transcript_arxiv(url, episode, use_cache=use_cache, background_knowledge=background_knowledge)
     #print(transcript)
     parsed_transcript = parse_transcript(transcript)
 
-    produce_audio(parsed_transcript, audio_filename=arxiv_id+'.wav')
+    produce_audio(parsed_transcript, audio_filename=arxiv_id+'.wav', offset=audio_offset)
