@@ -6,6 +6,10 @@ PaperCast is a project that turns any research articles into podcasts using AI g
 
 ![image](papercast.png)
 
+## Changelogs
+
+Jun 15th, 2024: add subtitle `srt` file generation.
+
 ## Example
 
 To generate a podcast for "Attention is all you need", you can simply run the following command:
@@ -19,6 +23,7 @@ It should produce `1706.03762.json` in the `transcript` directory and `1706.0376
 Please also try a few example videos on Youtube. The play list link is at [here](https://www.youtube.com/watch?v=IpuUIDOfArY&list=PLdZH-mptYlBHSHV5Ij6AgRt577UlGKaGR)
 
 [![Watch the video](https://img.youtube.com/vi/u6VHe1lJ94A/0.jpg)](https://youtu.be/u6VHe1lJ94A?si=7N3lT1akB1lAYLb8)
+
 
 ## Installation
 
