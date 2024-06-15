@@ -65,26 +65,55 @@ def produce_audio_data(text, speaker_seed, sequence_id=1):
 
     (sample_rate,audio), refined_text = generate_audio(text, temperature, top_P, top_K, audio_seed_input, text_seed_input, refine_text_flag)
 
-    print(text, refined_text)
-    return audio, refined_text
+    # calculate the audio duration in seconds 
+    audio_duration = len(audio) / sample_rate
+    return audio, refined_text, audio_duration
 
 # given a list of text, speaker_seed and sequence_id, 
 # produce audio files for each speaker and save them to a single audio file
-def produce_audio(transcript, audio_filename = 'test.wav'):
+def produce_audio(transcript, audio_filename = 'test.wav', offset=0):
     audio_data = []
+    transcript_text = [text for text, _, _ in transcript]
     for text, speaker_seed, sequence_id in transcript:
-        audio, refined_text = produce_audio_data(text, speaker_seed, sequence_id)
-        audio_data.append((audio, refined_text))
+        audio, refined_text, audio_duration = produce_audio_data(text, speaker_seed, sequence_id)
+        audio_data.append((audio, refined_text, audio_duration))
         print("finished producing audio for sequence_id:", sequence_id)
-        print(refined_text)
-    audio_data_all = [audio for audio, _ in audio_data]
-    refined_text_all = [refined_text for _, refined_text in audio_data]
+        print(audio_duration, refined_text)
+    
+    audio_data_all, refined_text_all, audio_duration_all = zip(*audio_data)
     audio_data_all = np.concatenate(audio_data_all)
     sample_rate = 24000
+
+    # generate the srt subtitle file with the audio duration from the transcript
+    srt_list = []
+    if offset > 0: # from zero to offset time, there is music, just show [MUSIC]
+        start_time_str = "{:02d}:{:02d}:{:02d},{:03d}".format(0, 0, 0, 0)
+        end_time_str = "{:02d}:{:02d}:{:02d},{:03d}".format(int(offset//3600), int((offset//60)%60), int(offset%60), int((offset*1000)%1000))
+        time_str = start_time_str + ' --> ' + end_time_str
+        srt_list.append((time_str, '[AI GENERATED MUSIC]'))
+    start_time = offset
+    for text, audio_duration in zip(transcript_text, audio_duration_all):
+        print(text, audio_duration)
+        end_time = start_time + audio_duration
+        # convert the start and end time to the srt format
+        start_time_str = "{:02d}:{:02d}:{:02d},{:03d}".format(int(start_time//3600), int((start_time//60)%60), int(start_time%60), int((start_time*1000)%1000))
+        end_time_str = "{:02d}:{:02d}:{:02d},{:03d}".format(int(end_time//3600), int((end_time//60)%60), int(end_time%60), int((end_time*1000)%1000))
+        # output the srt format
+        print(start_time_str, '-->', end_time_str)
+        time_str = start_time_str + ' --> ' + end_time_str
+        srt_list.append((time_str, text))
+        start_time = end_time
 
     if not os.path.exists('audio'):
         os.makedirs('audio')
     
+    # save the srt file
+    with open('audio/subtitle_'+audio_filename+'.srt', 'w') as srt_file:
+        for i, (time_str, text) in enumerate(srt_list):
+            srt_file.write(str(i+1) + '\n')
+            srt_file.write(time_str + '\n')
+            srt_file.write(text + '\n\n')
+        
     # soundfile is a more friendly lib for concatenated audio in numpy array
     # ChatTTS's torch audio example was not working for me
     soundfile.write("audio/"+audio_filename, audio_data_all, sample_rate)
