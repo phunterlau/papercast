@@ -8,8 +8,8 @@ PaperCast is a project that turns any research articles into podcasts using AI g
 
 ## Changelogs
 
-Jun 16th, 2024: add author interview model, by adding "author_interview_prompt" in `prompt.yaml` and `additional_questions` provided by authors; add PDF mode so it can extract necessary information for any PDF paper from `pdfs` directory.
-Jun 15th, 2024: add subtitle `srt` file generation. See `examples/run_gorilla.yaml` to set `offset` if any intro audio, and example video at [PaperCast EP5: "Gorilla: Large Language Model Connected with Massive APIs"](https://www.youtube.com/watch?v=KH3SAbm14cI)
+* Jun 16th, 2024: add author interview mode, by adding "author_interview_prompt" in `prompt.yaml` and `additional_questions` provided by authors; add PDF mode so it can extract necessary information for any PDF paper from `pdfs` directory.
+* Jun 15th, 2024: add subtitle `srt` file generation. See `examples/run_gorilla.yaml` to set `offset` if any intro audio, and example video at [PaperCast EP5: "Gorilla: Large Language Model Connected with Massive APIs"](https://www.youtube.com/watch?v=KH3SAbm14cI)
 
 ## Example
 
