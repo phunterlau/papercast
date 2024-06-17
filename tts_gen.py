@@ -20,7 +20,7 @@ def generate_seed(new_seed):
 def generate_audio(text, temperature, top_P, top_K, audio_seed_input, text_seed_input, 
                    refine_text_flag, 
                    speech_speed = '[speed_1]',
-                   params_refine_text = {'prompt': '[oral_3][laugh_0][break_5]'}):
+                   params_refine_text = {'prompt': '[oral_1][laugh_0][break_5]'}):
 
     torch.manual_seed(audio_seed_input)
     rand_spk = chat.sample_random_speaker()

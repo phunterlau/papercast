@@ -1,0 +1,11 @@
+url: "pdfs/1-s2.0-S0079742124000033-main.pdf"
+use_cache: false
+episode: "Special EP1"
+prompt: "author_interview_prompt"
+background_knowledge: |
+  The author Bertie is in the interview. Her research focus is about brain wave and loneliness. The article is her recent publication.
+additional_questions:
+  - "What does it mean when the author said cognition and beyond?"
+  - "what is the five-factor model and how they are related to in different aspects of language abilities ?"
+  - "What’s the author's understanding of these correlations from author's own expertise? I’ve read  work in openness and loneliness in older adults."
+  - "Can author help us then summarize the model about the interaction of personality traits and language processing with the examples in the work"

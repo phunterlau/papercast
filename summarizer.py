@@ -1,22 +1,7 @@
-import openai
 import yaml
 import os
 
-client = openai.OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-
-def gen_gpt_chat_completion(system_prompt, user_prompt, temp=0.1, engine="gpt-4o", max_tokens=2048,
-                            top_p=1, frequency_penalty=0, presence_penalty=0,):
-    
-    response = client.chat.completions.create(
-                    model="gpt-4o",
-                    messages=[{"role":"system", "content":system_prompt},
-                            {"role":"user", "content":user_prompt}],
-                    temperature=temp,
-                    max_tokens=max_tokens,
-                    top_p=1,
-                    frequency_penalty=0,
-                    presence_penalty=0)
-    return response
+from llm_funcs import gen_gpt_chat_completion
 
 def load_system_prompt(yaml_file):
     with open(yaml_file) as file:
@@ -26,8 +11,8 @@ def load_system_prompt(yaml_file):
 # the wrapper function to generate the summary from an arxiv url
 # url, episode, use_cache, prompt, background_knowledge are loaded from the driver's YAML file
 def generate_summary_arxiv(url='https://arxiv.org/abs/2405.04434', episode='1', use_cache=False,
-                           prompt='dialogue_prompt',
-                           background_knowledge='None'):
+                           prompt='dialogue_prompt', background_knowledge='None',
+                           additional_research_questions="None"):
     from arxiv_reader import get_arxiv
     arxiv_dict = get_arxiv(url, use_cache=use_cache)
     prompt_dict = load_system_prompt('prompts.yaml')
@@ -43,15 +28,17 @@ def generate_summary_arxiv(url='https://arxiv.org/abs/2405.04434', episode='1', 
     authors = arxiv_dict['authors']
     abstract = arxiv_dict['abstract']
     content = arxiv_dict['content']
+    dummy_content = 'Not available.'
 
     topic_prediction = gen_gpt_chat_completion("", topic_prompt + '\n Title:' + title + '\nAbstract:' + abstract + '\n')
     generated_topic = topic_prediction.choices[-1].message.content.strip()
     print("article topic:", generated_topic)
-    research_question_prompt = research_question_prompt.replace('<TITLE>', title).replace('<ABSTRACT>', abstract).replace('<TOPIC>', generated_topic)
+    research_question_prompt = research_question_prompt.replace('<TITLE>', title).replace('<ABSTRACT>', abstract).replace('<TOPIC>', generated_topic).replace('<CONTENT>', dummy_content)
     # generate the research question using title and abstract
     # TODO: research questions from title and abstract may not be the best choice
     # the full text with selected sections may be better
     research_questions = gen_gpt_chat_completion(research_question_prompt,'', temp=0.5).choices[-1].message.content.strip()
+    research_questions += "Additional research questions:\n" + additional_research_questions
     # inject the generated topic, research questions etc
     summarizer_prompt = generation_prompt.replace('<EPISODE_NUMBER>', episode).replace('<BACKGROUND_KNOWLEDGE>',background_knowledge_prompt).replace('<TITLE>', title).replace('<ABSTRACT>', abstract).replace('<AUTHORS>',authors).replace('<TOPIC>', generated_topic).replace('<RESEARCH_QUESTIONS>', research_questions)
     # generate the summary with some high temperature for more creativity
@@ -63,6 +50,53 @@ def generate_summary_arxiv(url='https://arxiv.org/abs/2405.04434', episode='1', 
         'authors': authors,
         'abstract': abstract,
         'content': content,
+        'research_questions': research_questions,
+        'summary': summary,
+    }
+
+# the wrapper function to generate the summary from a pdf file
+# pdf_path, use_cache, prompt are loaded from the driver's YAML file
+def generate_summary_pdf(pdf_path='pdfs/1-s2.0-S0079742124000033-main.pdf', episode='1', 
+                         use_cache=False, prompt='dialogue_prompt', background_knowledge='None',
+                         additional_research_questions="None"):
+    from pdf_reader import get_pdf
+    pdf_json = get_pdf(pdf_path, use_cache=use_cache)
+    prompt_dict = load_system_prompt('prompts.yaml')
+
+    generation_prompt = prompt_dict[prompt]
+    research_question_prompt = prompt_dict['research_question_prompt']
+    topic_prompt = prompt_dict['topic_prompt']
+    background_knowledge_prompt = background_knowledge
+    title = pdf_json['title']
+    authors = pdf_json['authors']
+    # if authors is a list, convert it to a string
+    if isinstance(authors, list):
+        authors = ';'.join(authors)
+    abstract = pdf_json['abstract']
+    content = pdf_json['content']
+    selected_content = pdf_json['full_text'] # LLM extracted selected content in dictionary format
+    short_content = ''
+    for section, text in selected_content.items():
+        short_content += section + ":\n" + text + '\n'
+
+    topic_prediction = gen_gpt_chat_completion("", topic_prompt + '\n Title:' + title + '\nAbstract:' + abstract + '\n')
+    generated_topic = topic_prediction.choices[-1].message.content.strip()
+    print("article topic:", generated_topic)
+    research_question_prompt = research_question_prompt.replace('<TITLE>', title).replace('<ABSTRACT>', abstract).replace('<TOPIC>', generated_topic).replace('<CONTENT>', short_content)
+    # generate the research question using title and abstract and short content
+    research_questions = gen_gpt_chat_completion(research_question_prompt,'', temp=0.5).choices[-1].message.content.strip()
+    research_questions += "Additional research questions:\n" + additional_research_questions
+    summarizer_prompt = generation_prompt.replace('<EPISODE_NUMBER>', episode).replace('<BACKGROUND_KNOWLEDGE>',short_content).replace('<TITLE>', title).replace('<ABSTRACT>', abstract).replace('<AUTHORS>',authors).replace('<TOPIC>', generated_topic).replace('<RESEARCH_QUESTIONS>', research_questions)
+    # generate the summary with some high temperature for more creativity
+    summary = gen_gpt_chat_completion(summarizer_prompt, content, temp=0.7, max_tokens=4096).choices[-1].message.content.strip()
+
+    return {
+        'pdf_id': pdf_json['pdf_id'],
+        'title': title,
+        'authors': authors,
+        'abstract': abstract,
+        'content': content,
+        'research_questions': research_questions,
         'summary': summary,
     }
 
