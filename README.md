@@ -8,6 +8,7 @@ PaperCast is a project that turns any research articles into podcasts using AI g
 
 ## Changelogs
 
+Jun 16th, 2024: add author interview model, by adding "author_interview_prompt" in `prompt.yaml` and `additional_questions` provided by authors; add PDF mode so it can extract necessary information for any PDF paper from `pdfs` directory.
 Jun 15th, 2024: add subtitle `srt` file generation. See `examples/run_gorilla.yaml` to set `offset` if any intro audio, and example video at [PaperCast EP5: "Gorilla: Large Language Model Connected with Massive APIs"](https://www.youtube.com/watch?v=KH3SAbm14cI)
 
 ## Example
@@ -61,10 +62,12 @@ background_knowledge: |
   It is the foundation paper of the current large language model research.
 ```
 
-* `url`: an Arxiv URL (abs or pdf).
+* `url`: an Arxiv URL (abs or pdf) or a local file path of a PDF file.
 * `use_cache`: if load the cached LLM-generated transcript or start over.
+* `episode` : Episode number.
 * `prompt`: refer to `prompt.YAML` for the podcast style, dialogue or monologue etc.
-* `background_knowledge`: optional additional knowledge for better context understanding. Use "None" if not available.
+* (optional) `background_knowledge`: additional knowledge for better context understanding. Use "None" if not available.
+* (optional) `additional_questions`: additional research questions for input.
 
 ## How does it work
 
@@ -82,10 +85,11 @@ I prefer the podcast in the question answering style, so the transcript must inc
 ## Future ideas
 
 - [ ] more article readers beyond arxiv loader
-- [ ] a good PDF loader to parse article meta data and sections
+- [x] a good PDF loader to parse article meta data and sections
 - [ ] Add Chinese voices
-- [ ] Better question generation using full text
+- [x] Better question generation using full text
 - [ ] Support multi-persons discussions with agentic workflow
+- [x] Support different interview modes, e.g. host vs author
 
 ## License and disclaimer
 
