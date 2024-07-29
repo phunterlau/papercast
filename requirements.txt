@@ -1,0 +1,14 @@
+bs4
+openai==1.31.0
+PyMuPDF==1.24.5
+pynini
+PyYAML
+requests
+sox==1.5.0
+torch==2.3.1
+torchaudio==2.3.1
+torchvision==0.18.1
+tqdm==4.66.4
+WeTextProcessing==1.0.1
+nemo_text_processing
+arxiv==1.0.1
