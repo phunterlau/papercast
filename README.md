@@ -6,6 +6,24 @@ PaperCast is a project that turns any research articles into podcasts using AI g
 
 ![image](papercast.png)
 
+## Compare with Illuminate
+
+Aug 30th: Illuminate eventually becomes available, give it is a try <illuminate.google.com>
+
+|   | PaperCast  | Illuminate  |
+|---|---|---|
+| Open Source | ✅ Yes | 🟡 Not yet  |
+| Fine-grain control | ✅ Yes  | 🟡 Only arxiv links  |
+| Research field | ✅ Any research  | 🟡 Only Computer Science  |
+| Audio quality | ✅ Good | ✅ Very good |
+| Paper source | ✅ Any papers | ArXiv only |
+| Allow multiple papers  | 🟡 Not yet  | ✅ Yes  |
+| Content understanding | ✅ Good | ✅ Good |
+| Computing resource | 💻 Local | ☁️ Cloud |
+| Generation Limit | ✅ As many | 5 per day |
+| Has Red Panda? | Yes, Justin and Emma | Only humans🧑‍🎓 |
+
+
 ## Changelogs
 
 * July 29th, 2024: refactorize arxiv reader and leverage its HTML render and parse to JSON + Markdown
