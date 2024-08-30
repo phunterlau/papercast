@@ -16,6 +16,7 @@ Aug 30th: Illuminate eventually becomes available, give it is a try <https://ill
 | Fine-grain control | ✅ Yes  | 🟡 Only arxiv links  |
 | Research field | ✅ Any research  | 🟡 Only Computer Science  |
 | Audio quality | ✅ Good | ✅ Very good |
+| Voice tone | ✅ Conversational | 🟡 Flat |
 | Paper source | ✅ Any papers | 🟡 ArXiv only |
 | Allow multiple papers  | 🟡 Not yet  | ✅ Yes  |
 | Content understanding | ✅ Good | ✅ Good |
