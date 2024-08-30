@@ -8,7 +8,7 @@ PaperCast is a project that turns any research articles into podcasts using AI g
 
 ## Compare with Illuminate
 
-Aug 30th: Illuminate eventually becomes available, give it is a try <illuminate.google.com>
+Aug 30th: Illuminate eventually becomes available, give it is a try <https://illuminate.google.com/>
 
 |   | PaperCast  | Illuminate  |
 |---|---|---|
