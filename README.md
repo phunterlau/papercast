@@ -16,11 +16,11 @@ Aug 30th: Illuminate eventually becomes available, give it is a try <https://ill
 | Fine-grain control | ✅ Yes  | 🟡 Only arxiv links  |
 | Research field | ✅ Any research  | 🟡 Only Computer Science  |
 | Audio quality | ✅ Good | ✅ Very good |
-| Paper source | ✅ Any papers | ArXiv only |
+| Paper source | ✅ Any papers | 🟡 ArXiv only |
 | Allow multiple papers  | 🟡 Not yet  | ✅ Yes  |
 | Content understanding | ✅ Good | ✅ Good |
 | Computing resource | 💻 Local | ☁️ Cloud |
-| Generation Limit | ✅ As many | 5 per day |
+| Generation Limit | ✅ As many | 🟡 5 per day |
 | Has Red Panda? | Yes, Justin and Emma | Only humans🧑‍🎓 |
 
 
